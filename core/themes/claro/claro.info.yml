@@ -16,7 +16,7 @@ base theme: false
 description: 'A clean, accessible, and powerful Drupal administration theme.'
 alt text: 'Screenshot of Claro, Drupal administration theme.'
 package: Core
-# version: VERSION
+version: VERSION
 libraries:
   - core/drupal.message
   - core/normalize
@@ -100,7 +100,7 @@ libraries-override:
   views_ui/admin.styling:
     css:
       component:
-        css/views_ui.admin.css: css/components/views_ui.admin.css
+          css/views_ui.admin.css: css/components/views_ui.admin.css
       theme:
         css/views_ui.admin.theme.css: css/theme/views_ui.admin.theme.css
 
@@ -166,8 +166,3 @@ regions:
   sidebar_first: 'First sidebar'
 regions_hidden:
   - sidebar_first
-
-# Information added by Drupal.org packaging script on 2022-10-28
-version: '10.0.0-beta2+131-dev'
-project: 'drupal'
-datestamp: 1666961461

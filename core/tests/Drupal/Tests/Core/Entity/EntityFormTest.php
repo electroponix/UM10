@@ -56,10 +56,10 @@ class EntityFormTest extends UnitTestCase {
 
     $entity->expects($this->any())
       ->method('getEntityType')
-      ->willReturn($this->entityType);
+      ->will($this->returnValue($this->entityType));
     $entity->expects($this->any())
       ->method('bundle')
-      ->willReturn($definition['bundle']);
+      ->will($this->returnValue($definition['bundle']));
 
     $this->entityForm->setEntity($entity);
     $this->entityForm->setOperation($definition['operation']);

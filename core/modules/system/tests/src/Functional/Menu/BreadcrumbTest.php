@@ -305,7 +305,11 @@ class BreadcrumbTest extends BrowserTestBase {
       // untranslated menu links automatically generated from menu router items
       // ('taxonomy/term/%') should never be translated and appear in any menu
       // other than the breadcrumb trail.
-      $this->assertSession()->elementsCount('xpath', '//nav[contains(@class, "menu--tools")]/descendant::a[@href="' . Url::fromUri('base:' . $link_path)->toString() . '"]', 1);
+      $elements = $this->xpath('//nav[contains(@class, :menu-class)]/descendant::a[@href=:href]', [
+        ':menu-class' => 'menu--tools',
+        ':href' => Url::fromUri('base:' . $link_path)->toString(),
+      ]);
+      $this->assertCount(1, $elements, "Link to {$link_path} appears only once.");
 
       // Next iteration should expect this tag as parent link.
       // Note: Term name, not link name, due to taxonomy_term_page().

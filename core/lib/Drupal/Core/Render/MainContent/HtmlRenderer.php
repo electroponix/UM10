@@ -219,7 +219,6 @@ class HtmlRenderer implements MainContentRendererInterface {
       $event = new PageDisplayVariantSelectionEvent('simple_page', $route_match);
       $this->eventDispatcher->dispatch($event, RenderEvents::SELECT_PAGE_DISPLAY_VARIANT);
       $variant_id = $event->getPluginId();
-      $variant_configuration = $event->getPluginConfiguration();
 
       // We must render the main content now already, because it might provide a
       // title. We set its $is_root_call parameter to FALSE, to ensure
@@ -245,14 +244,15 @@ class HtmlRenderer implements MainContentRendererInterface {
       $title = $get_title($main_content);
 
       // Instantiate the page display, and give it the main content.
-      $page_display = $this->displayVariantManager->createInstance($variant_id, $variant_configuration);
+      $page_display = $this->displayVariantManager->createInstance($variant_id);
       if (!$page_display instanceof PageVariantInterface) {
         throw new \LogicException('Cannot render the main content for this page because the provided display variant does not implement PageVariantInterface.');
       }
       $page_display
         ->setMainContent($main_content)
         ->setTitle($title)
-        ->addCacheableDependency($event);
+        ->addCacheableDependency($event)
+        ->setConfiguration($event->getPluginConfiguration());
       // Some display variants need to be passed an array of contexts with
       // values because they can't get all their contexts globally. For example,
       // in Page Manager, you can create a Page which has a specific static

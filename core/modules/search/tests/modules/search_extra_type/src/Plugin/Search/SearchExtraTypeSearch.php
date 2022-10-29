@@ -26,7 +26,6 @@ class SearchExtraTypeSearch extends ConfigurableSearchPluginBase {
       $parameters['search_conditions'] = '';
     }
     parent::setSearch($keywords, $parameters, $attributes);
-    return $this;
   }
 
   /**

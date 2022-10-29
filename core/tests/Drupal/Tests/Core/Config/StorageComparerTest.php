@@ -101,22 +101,22 @@ class StorageComparerTest extends UnitTestCase {
     $config_files = array_keys($config_data);
     $this->sourceStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn($config_files);
+      ->will($this->returnValue($config_files));
     $this->targetStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn($config_files);
+      ->will($this->returnValue($config_files));
     $this->sourceStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($config_data);
+      ->will($this->returnValue($config_data));
     $this->targetStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($config_data);
+      ->will($this->returnValue($config_data));
     $this->sourceStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
     $this->targetStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $this->storageComparer->createChangelist();
     $this->assertEmpty($this->storageComparer->getChangelist('create'));
@@ -135,22 +135,22 @@ class StorageComparerTest extends UnitTestCase {
 
     $this->sourceStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($source_data));
+      ->will($this->returnValue(array_keys($source_data)));
     $this->targetStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($target_data));
+      ->will($this->returnValue(array_keys($target_data)));
     $this->sourceStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($source_data);
+      ->will($this->returnValue($source_data));
     $this->targetStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($target_data);
+      ->will($this->returnValue($target_data));
     $this->sourceStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
     $this->targetStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $this->storageComparer->createChangelist();
     $expected = [
@@ -174,22 +174,22 @@ class StorageComparerTest extends UnitTestCase {
 
     $this->sourceStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($source_data));
+      ->will($this->returnValue(array_keys($source_data)));
     $this->targetStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($target_data));
+      ->will($this->returnValue(array_keys($target_data)));
     $this->sourceStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($source_data);
+      ->will($this->returnValue($source_data));
     $this->targetStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($target_data);
+      ->will($this->returnValue($target_data));
     $this->sourceStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
     $this->targetStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $this->storageComparer->createChangelist();
     $expected = [
@@ -213,22 +213,22 @@ class StorageComparerTest extends UnitTestCase {
 
     $this->sourceStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($source_data));
+      ->will($this->returnValue(array_keys($source_data)));
     $this->targetStorage->expects($this->once())
       ->method('listAll')
-      ->willReturn(array_keys($target_data));
+      ->will($this->returnValue(array_keys($target_data)));
     $this->sourceStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($source_data);
+      ->will($this->returnValue($source_data));
     $this->targetStorage->expects($this->once())
       ->method('readMultiple')
-      ->willReturn($target_data);
+      ->will($this->returnValue($target_data));
     $this->sourceStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
     $this->targetStorage->expects($this->once())
       ->method('getAllCollectionNames')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $this->storageComparer->createChangelist();
     $expected = [

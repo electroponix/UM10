@@ -49,7 +49,8 @@ class EntityReferenceAdminTest extends WebDriverTestBase {
   protected $type;
 
   /**
-   * Name of a second content type to be used as a target of entity references.
+   * The name of a second content type to be used as a target of entity
+   * references.
    *
    * @var string
    */

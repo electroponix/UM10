@@ -93,7 +93,10 @@ class LocalTasksTest extends BrowserTestBase {
    * @internal
    */
   protected function assertNoLocalTasks(int $level = 0): void {
-    $this->assertSession()->elementNotExists('xpath', '//*[contains(@class, "' . ($level == 0 ? 'tabs primary' : 'tabs secondary') . '")]//a');
+    $elements = $this->xpath('//*[contains(@class, :class)]//a', [
+      ':class' => $level == 0 ? 'tabs primary' : 'tabs secondary',
+    ]);
+    $this->assertEmpty($elements, 'Local tasks not found.');
   }
 
   /**
@@ -188,8 +191,9 @@ class LocalTasksTest extends BrowserTestBase {
 
     $this->assertLocalTasks($tasks, 0);
 
-    $this->assertSession()->elementsCount('xpath', '//ul[contains(@class, "tabs")]//li[contains(@class, "active")]', 1);
-    $this->assertSession()->elementTextEquals('xpath', '//ul[contains(@class, "tabs")]//li[contains(@class, "active")]', 'upcasting sub1(active tab)');
+    $result = $this->xpath('//ul[contains(@class, "tabs")]//li[contains(@class, "active")]');
+    $this->assertCount(1, $result, 'There is one active tab.');
+    $this->assertEquals('upcasting sub1(active tab)', $result[0]->getText(), 'The "upcasting sub1" tab is active.');
 
     $this->drupalGet(Url::fromRoute('menu_test.local_task_test_upcasting_sub2', ['entity_test' => '1']));
 
@@ -199,8 +203,9 @@ class LocalTasksTest extends BrowserTestBase {
     ];
     $this->assertLocalTasks($tasks, 0);
 
-    $this->assertSession()->elementsCount('xpath', '//ul[contains(@class, "tabs")]//li[contains(@class, "active")]', 1);
-    $this->assertSession()->elementTextEquals('xpath', '//ul[contains(@class, "tabs")]//li[contains(@class, "active")]', 'upcasting sub2(active tab)');
+    $result = $this->xpath('//ul[contains(@class, "tabs")]//li[contains(@class, "active")]');
+    $this->assertCount(1, $result, 'There is one active tab.');
+    $this->assertEquals('upcasting sub2(active tab)', $result[0]->getText(), 'The "upcasting sub2" tab is active.');
   }
 
   /**

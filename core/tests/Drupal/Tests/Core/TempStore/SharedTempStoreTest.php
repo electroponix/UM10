@@ -147,7 +147,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->exactly(2))
       ->method('acquire')
       ->with('test')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
     $this->lock->expects($this->once())
       ->method('wait')
       ->with('test');
@@ -168,7 +168,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with('test')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
     $this->lock->expects($this->never())
       ->method('wait');
     $this->lock->expects($this->once())
@@ -191,7 +191,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->keyValue->expects($this->once())
       ->method('setWithExpireIfNotExists')
       ->with('test', $this->ownObject, 604800)
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->assertTrue($this->tempStore->setIfNotExists('test', 'test_data'));
   }
@@ -204,7 +204,7 @@ class SharedTempStoreTest extends UnitTestCase {
   public function testSetIfOwnerWhenNotExists() {
     $this->keyValue->expects($this->once())
       ->method('setWithExpireIfNotExists')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->assertTrue($this->tempStore->setIfOwner('test', 'test_data'));
   }
@@ -217,12 +217,12 @@ class SharedTempStoreTest extends UnitTestCase {
   public function testSetIfOwnerNoObject() {
     $this->keyValue->expects($this->once())
       ->method('setWithExpireIfNotExists')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->keyValue->expects($this->once())
       ->method('get')
       ->with('test')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->assertFalse($this->tempStore->setIfOwner('test', 'test_data'));
   }
@@ -236,11 +236,11 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with('test')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->keyValue->expects($this->exactly(2))
       ->method('setWithExpireIfNotExists')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->keyValue->expects($this->exactly(2))
       ->method('get')
@@ -280,7 +280,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with('test')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
     $this->lock->expects($this->never())
       ->method('wait');
     $this->lock->expects($this->once())
@@ -303,7 +303,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->exactly(2))
       ->method('acquire')
       ->with('test')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
     $this->lock->expects($this->once())
       ->method('wait')
       ->with('test');
@@ -324,7 +324,7 @@ class SharedTempStoreTest extends UnitTestCase {
     $this->lock->expects($this->once())
       ->method('acquire')
       ->with('test_2')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->keyValue->expects($this->exactly(3))
       ->method('get')

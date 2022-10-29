@@ -42,13 +42,13 @@ class ResponsiveImageStyleConfigEntityUnitTest extends UnitTestCase {
     $this->entityType = $this->createMock('\Drupal\Core\Entity\EntityTypeInterface');
     $this->entityType->expects($this->any())
       ->method('getProvider')
-      ->willReturn('responsive_image');
+      ->will($this->returnValue('responsive_image'));
 
     $this->entityTypeManager = $this->createMock(EntityTypeManagerInterface::class);
     $this->entityTypeManager->expects($this->any())
       ->method('getDefinition')
       ->with('responsive_image_style')
-      ->willReturn($this->entityType);
+      ->will($this->returnValue($this->entityType));
 
     $this->breakpointManager = $this->createMock('\Drupal\breakpoint\BreakpointManagerInterface');
 

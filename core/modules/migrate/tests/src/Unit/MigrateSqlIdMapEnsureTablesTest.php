@@ -231,8 +231,7 @@ class MigrateSqlIdMapEnsureTablesTest extends MigrateTestCase {
       ->willReturn($plugin);
     /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $event_dispatcher */
     $event_dispatcher = $this->createMock('Symfony\Contracts\EventDispatcher\EventDispatcherInterface');
-    $migration_manager = $this->createMock('Drupal\migrate\Plugin\MigrationPluginManagerInterface');
-    $map = new TestSqlIdMap($database, [], 'sql', [], $migration, $event_dispatcher, $migration_manager);
+    $map = new TestSqlIdMap($database, [], 'sql', [], $migration, $event_dispatcher);
     $map->getDatabase();
   }
 

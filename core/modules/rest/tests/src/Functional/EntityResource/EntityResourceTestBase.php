@@ -85,8 +85,6 @@ abstract class EntityResourceTestBase extends ResourceTestBase {
   protected static $patchProtectedFieldNames;
 
   /**
-   * The unique field names.
-   *
    * The fields that need a different (random) value for each new entity created
    * by a POST request.
    *
@@ -95,8 +93,6 @@ abstract class EntityResourceTestBase extends ResourceTestBase {
   protected static $uniqueFieldNames = [];
 
   /**
-   * The field name for the label.
-   *
    * Optionally specify which field is the 'label' field. Some entities do not
    * specify a 'label' entity key. For example: User.
    *

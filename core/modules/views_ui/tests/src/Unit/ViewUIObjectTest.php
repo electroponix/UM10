@@ -85,7 +85,7 @@ class ViewUIObjectTest extends UnitTestCase {
     $account = $this->createMock('Drupal\Core\Session\AccountInterface');
     $account->expects($this->exactly(2))
       ->method('id')
-      ->willReturn(1);
+      ->will($this->returnValue(1));
 
     $container = new ContainerBuilder();
     $container->set('current_user', $account);

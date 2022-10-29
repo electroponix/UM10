@@ -224,7 +224,12 @@ class FilterAdminTest extends BrowserTestBase {
     $this->drupalGet('admin/config/content/formats/manage/' . $restricted);
     // Check that the allowed HTML tag was added and the string reformatted.
     $this->assertSession()->fieldValueEquals('filters[filter_html][settings][allowed_html]', "<a> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> <dt> <dd> <quote>");
-    $this->assertSession()->elementExists('xpath', "//select[@name='filters[" . $first_filter . "][weight]']/following::select[@name='filters[" . $second_filter . "][weight]']");
+
+    $elements = $this->xpath('//select[@name=:first]/following::select[@name=:second]', [
+      ':first' => 'filters[' . $first_filter . '][weight]',
+      ':second' => 'filters[' . $second_filter . '][weight]',
+    ]);
+    $this->assertNotEmpty($elements, 'Order confirmed in admin interface.');
 
     // Reorder filters.
     $edit = [];
@@ -235,7 +240,12 @@ class FilterAdminTest extends BrowserTestBase {
     $this->drupalGet('admin/config/content/formats/manage/' . $restricted);
     $this->assertSession()->fieldValueEquals('filters[' . $second_filter . '][weight]', 1);
     $this->assertSession()->fieldValueEquals('filters[' . $first_filter . '][weight]', 2);
-    $this->assertSession()->elementExists('xpath', "//select[@name='filters[" . $second_filter . "][weight]']/following::select[@name='filters[" . $first_filter . "][weight]']");
+
+    $elements = $this->xpath('//select[@name=:first]/following::select[@name=:second]', [
+      ':first' => 'filters[' . $second_filter . '][weight]',
+      ':second' => 'filters[' . $first_filter . '][weight]',
+    ]);
+    $this->assertNotEmpty($elements, 'Reorder confirmed in admin interface.');
 
     $filter_format = FilterFormat::load($restricted);
     foreach ($filter_format->filters() as $filter_name => $filter) {

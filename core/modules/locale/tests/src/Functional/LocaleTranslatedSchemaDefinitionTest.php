@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\locale\Functional;
 
-use Drupal\Core\Url;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\RequirementsPageTrait;
@@ -72,7 +71,7 @@ class LocaleTranslatedSchemaDefinitionTest extends BrowserTestBase {
     // Visit the update page to collect any strings that may be translatable.
     $user = $this->drupalCreateUser(['administer software updates']);
     $this->drupalLogin($user);
-    $update_url = Url::fromRoute('system.db_update')->setAbsolute()->toString();
+    $update_url = $GLOBALS['base_url'] . '/update.php';
 
     // Collect strings from the PHP warning page, if applicable, as well as the
     // main update page.

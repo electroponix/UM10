@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\serialization\Unit\Normalizer;
 
-use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityTypeRepositoryInterface;
@@ -88,7 +87,7 @@ class EntityNormalizerTest extends UnitTestCase {
       ->getMockForAbstractClass();
     $content_entity->expects($this->once())
       ->method('getFields')
-      ->willReturn($definitions);
+      ->will($this->returnValue($definitions));
 
     $serializer = $this->getMockBuilder('Symfony\Component\Serializer\Serializer')
       ->disableOriginalConstructor()
@@ -138,11 +137,11 @@ class EntityNormalizerTest extends UnitTestCase {
     $entity_type->expects($this->once())
       ->method('hasKey')
       ->with('bundle')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
     $entity_type->expects($this->once())
       ->method('getKey')
       ->with('bundle')
-      ->willReturn('test_type');
+      ->will($this->returnValue('test_type'));
     $entity_type->expects($this->once())
       ->method('entityClassImplements')
       ->with(FieldableEntityInterface::class)
@@ -150,17 +149,17 @@ class EntityNormalizerTest extends UnitTestCase {
 
     $entity_type->expects($this->once())
       ->method('getBundleEntityType')
-      ->willReturn('test_bundle');
+      ->will($this->returnValue('test_bundle'));
 
     $entity_type_storage_definition = $this->createMock('Drupal\Core\Field\FieldStorageDefinitionInterface');
     $entity_type_storage_definition->expects($this->once())
       ->method('getMainPropertyName')
-      ->willReturn('name');
+      ->will($this->returnValue('name'));
 
     $entity_type_definition = $this->createMock('Drupal\Core\Field\FieldDefinitionInterface');
     $entity_type_definition->expects($this->once())
       ->method('getFieldStorageDefinition')
-      ->willReturn($entity_type_storage_definition);
+      ->will($this->returnValue($entity_type_storage_definition));
 
     $base_definitions = [
       'test_type' => $entity_type_definition,
@@ -169,26 +168,26 @@ class EntityNormalizerTest extends UnitTestCase {
     $this->entityTypeManager->expects($this->once())
       ->method('getDefinition')
       ->with('test')
-      ->willReturn($entity_type);
+      ->will($this->returnValue($entity_type));
     $this->entityFieldManager->expects($this->once())
       ->method('getBaseFieldDefinitions')
       ->with('test')
-      ->willReturn($base_definitions);
+      ->will($this->returnValue($base_definitions));
 
     $entity_query_mock = $this->createMock('Drupal\Core\Entity\Query\QueryInterface');
     $entity_query_mock->expects($this->once())
       ->method('execute')
-      ->willReturn(['test_bundle' => 'test_bundle']);
+      ->will($this->returnValue(['test_bundle' => 'test_bundle']));
 
     $entity_type_storage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
     $entity_type_storage->expects($this->once())
       ->method('getQuery')
-      ->willReturn($entity_query_mock);
+      ->will($this->returnValue($entity_query_mock));
 
     $key_1 = $this->createMock(FieldItemListInterface::class);
     $key_2 = $this->createMock(FieldItemListInterface::class);
 
-    $entity = $this->createMock(ContentEntityBase::class);
+    $entity = $this->createMock(FieldableEntityInterface::class);
     $entity->expects($this->exactly(2))
       ->method('get')
       ->willReturnMap([
@@ -205,7 +204,7 @@ class EntityNormalizerTest extends UnitTestCase {
     $storage->expects($this->once())
       ->method('create')
       ->with($expected_test_data)
-      ->willReturn($entity);
+      ->will($this->returnValue($entity));
 
     $this->entityTypeManager->expects($this->exactly(2))
       ->method('getStorage')
@@ -254,11 +253,11 @@ class EntityNormalizerTest extends UnitTestCase {
     $entity_type->expects($this->once())
       ->method('hasKey')
       ->with('bundle')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
     $entity_type->expects($this->once())
       ->method('getKey')
       ->with('bundle')
-      ->willReturn('test_type');
+      ->will($this->returnValue('test_type'));
     $entity_type->expects($this->once())
       ->method('entityClassImplements')
       ->with(FieldableEntityInterface::class)
@@ -266,17 +265,17 @@ class EntityNormalizerTest extends UnitTestCase {
 
     $entity_type->expects($this->once())
       ->method('getBundleEntityType')
-      ->willReturn('test_bundle');
+      ->will($this->returnValue('test_bundle'));
 
     $entity_type_storage_definition = $this->createMock('Drupal\Core\Field\FieldStorageDefinitionInterface');
     $entity_type_storage_definition->expects($this->once())
       ->method('getMainPropertyName')
-      ->willReturn('name');
+      ->will($this->returnValue('name'));
 
     $entity_type_definition = $this->createMock('Drupal\Core\Field\FieldDefinitionInterface');
     $entity_type_definition->expects($this->once())
       ->method('getFieldStorageDefinition')
-      ->willReturn($entity_type_storage_definition);
+      ->will($this->returnValue($entity_type_storage_definition));
 
     $base_definitions = [
       'test_type' => $entity_type_definition,
@@ -285,26 +284,26 @@ class EntityNormalizerTest extends UnitTestCase {
     $this->entityTypeManager->expects($this->once())
       ->method('getDefinition')
       ->with('test')
-      ->willReturn($entity_type);
+      ->will($this->returnValue($entity_type));
     $this->entityFieldManager->expects($this->once())
       ->method('getBaseFieldDefinitions')
       ->with('test')
-      ->willReturn($base_definitions);
+      ->will($this->returnValue($base_definitions));
 
     $entity_query_mock = $this->createMock('Drupal\Core\Entity\Query\QueryInterface');
     $entity_query_mock->expects($this->once())
       ->method('execute')
-      ->willReturn(['test_bundle_other' => 'test_bundle_other']);
+      ->will($this->returnValue(['test_bundle_other' => 'test_bundle_other']));
 
     $entity_type_storage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
     $entity_type_storage->expects($this->once())
       ->method('getQuery')
-      ->willReturn($entity_query_mock);
+      ->will($this->returnValue($entity_query_mock));
 
     $this->entityTypeManager->expects($this->once())
       ->method('getStorage')
       ->with('test_bundle')
-      ->willReturn($entity_type_storage);
+      ->will($this->returnValue($entity_type_storage));
 
     $this->expectException(UnexpectedValueException::class);
     $this->entityNormalizer->denormalize($test_data, 'Drupal\Core\Entity\ContentEntityBase', NULL, ['entity_type' => 'test']);
@@ -329,19 +328,19 @@ class EntityNormalizerTest extends UnitTestCase {
     $entity_type->expects($this->once())
       ->method('hasKey')
       ->with('bundle')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
     $entity_type->expects($this->never())
       ->method('getKey');
 
     $this->entityTypeManager->expects($this->once())
       ->method('getDefinition')
       ->with('test')
-      ->willReturn($entity_type);
+      ->will($this->returnValue($entity_type));
 
     $key_1 = $this->createMock(FieldItemListInterface::class);
     $key_2 = $this->createMock(FieldItemListInterface::class);
 
-    $entity = $this->createMock(ContentEntityBase::class);
+    $entity = $this->createMock(FieldableEntityInterface::class);
     $entity->expects($this->exactly(2))
       ->method('get')
       ->willReturnMap([
@@ -353,12 +352,12 @@ class EntityNormalizerTest extends UnitTestCase {
     $storage->expects($this->once())
       ->method('create')
       ->with([])
-      ->willReturn($entity);
+      ->will($this->returnValue($entity));
 
     $this->entityTypeManager->expects($this->once())
       ->method('getStorage')
       ->with('test')
-      ->willReturn($storage);
+      ->will($this->returnValue($storage));
 
     $this->entityFieldManager->expects($this->never())
       ->method('getBaseFieldDefinitions');
@@ -404,18 +403,18 @@ class EntityNormalizerTest extends UnitTestCase {
     $this->entityTypeManager->expects($this->once())
       ->method('getDefinition')
       ->with('test')
-      ->willReturn($entity_type);
+      ->will($this->returnValue($entity_type));
 
     $storage = $this->createMock('Drupal\Core\Entity\EntityStorageInterface');
     $storage->expects($this->once())
       ->method('create')
       ->with($test_data)
-      ->willReturn($this->createMock(ContentEntityBase::class));
+      ->will($this->returnValue($this->createMock('Drupal\Core\Entity\EntityInterface')));
 
     $this->entityTypeManager->expects($this->once())
       ->method('getStorage')
       ->with('test')
-      ->willReturn($storage);
+      ->will($this->returnValue($storage));
 
     $this->entityFieldManager->expects($this->never())
       ->method('getBaseFieldDefinitions');

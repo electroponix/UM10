@@ -73,7 +73,7 @@ class UserAuthTest extends UnitTestCase {
     $entity_type_manager->expects($this->any())
       ->method('getStorage')
       ->with('user')
-      ->willReturn($this->userStorage);
+      ->will($this->returnValue($this->userStorage));
 
     $this->passwordService = $this->createMock('Drupal\Core\Password\PasswordInterface');
 
@@ -122,7 +122,7 @@ class UserAuthTest extends UnitTestCase {
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $this->assertFalse($this->userAuth->authenticate($this->username, $this->password));
   }
@@ -136,12 +136,12 @@ class UserAuthTest extends UnitTestCase {
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$this->testUser]);
+      ->will($this->returnValue([$this->testUser]));
 
     $this->passwordService->expects($this->once())
       ->method('check')
       ->with($this->password, $this->testUser->getPassword())
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->assertFalse($this->userAuth->authenticate($this->username, $this->password));
   }
@@ -154,17 +154,17 @@ class UserAuthTest extends UnitTestCase {
   public function testAuthenticateWithCorrectPassword() {
     $this->testUser->expects($this->once())
       ->method('id')
-      ->willReturn(1);
+      ->will($this->returnValue(1));
 
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$this->testUser]);
+      ->will($this->returnValue([$this->testUser]));
 
     $this->passwordService->expects($this->once())
       ->method('check')
       ->with($this->password, $this->testUser->getPassword())
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->assertSame(1, $this->userAuth->authenticate($this->username, $this->password));
   }
@@ -181,17 +181,17 @@ class UserAuthTest extends UnitTestCase {
   public function testAuthenticateWithZeroPassword() {
     $this->testUser->expects($this->once())
       ->method('id')
-      ->willReturn(2);
+      ->will($this->returnValue(2));
 
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$this->testUser]);
+      ->will($this->returnValue([$this->testUser]));
 
     $this->passwordService->expects($this->once())
       ->method('check')
       ->with(0, 0)
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->assertSame(2, $this->userAuth->authenticate($this->username, 0));
   }
@@ -204,7 +204,7 @@ class UserAuthTest extends UnitTestCase {
   public function testAuthenticateWithCorrectPasswordAndNewPasswordHash() {
     $this->testUser->expects($this->once())
       ->method('id')
-      ->willReturn(1);
+      ->will($this->returnValue(1));
     $this->testUser->expects($this->once())
       ->method('setPassword')
       ->with($this->password);
@@ -214,16 +214,16 @@ class UserAuthTest extends UnitTestCase {
     $this->userStorage->expects($this->once())
       ->method('loadByProperties')
       ->with(['name' => $this->username])
-      ->willReturn([$this->testUser]);
+      ->will($this->returnValue([$this->testUser]));
 
     $this->passwordService->expects($this->once())
       ->method('check')
       ->with($this->password, $this->testUser->getPassword())
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
     $this->passwordService->expects($this->once())
       ->method('needsRehash')
       ->with($this->testUser->getPassword())
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->assertSame(1, $this->userAuth->authenticate($this->username, $this->password));
   }

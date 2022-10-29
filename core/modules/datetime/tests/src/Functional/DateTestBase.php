@@ -99,8 +99,6 @@ abstract class DateTestBase extends BrowserTestBase {
       'administer content types',
       'bypass node access',
       'administer node fields',
-      'administer node form display',
-      'administer node display',
     ]);
     $this->drupalLogin($web_user);
 

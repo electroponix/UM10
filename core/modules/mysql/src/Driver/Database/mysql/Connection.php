@@ -9,7 +9,6 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Database\DatabaseNotFoundException;
 use Drupal\Core\Database\DatabaseException;
 use Drupal\Core\Database\Connection as DatabaseConnection;
-use Drupal\Core\Database\SupportsTemporaryTablesInterface;
 use Drupal\Core\Database\TransactionNoActiveException;
 
 /**
@@ -20,7 +19,7 @@ use Drupal\Core\Database\TransactionNoActiveException;
 /**
  * MySQL implementation of \Drupal\Core\Database\Connection.
  */
-class Connection extends DatabaseConnection implements SupportsTemporaryTablesInterface {
+class Connection extends DatabaseConnection {
 
   /**
    * Error code for "Unknown database" error.
@@ -221,15 +220,6 @@ class Connection extends DatabaseConnection implements SupportsTemporaryTablesIn
 
   public function queryRange($query, $from, $count, array $args = [], array $options = []) {
     return $this->query($query . ' LIMIT ' . (int) $from . ', ' . (int) $count, $args, $options);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function queryTemporary($query, array $args = [], array $options = []) {
-    $tablename = 'db_temporary_' . uniqid();
-    $this->query('CREATE TEMPORARY TABLE {' . $tablename . '} Engine=MEMORY ' . $query, $args, $options);
-    return $tablename;
   }
 
   public function driver() {

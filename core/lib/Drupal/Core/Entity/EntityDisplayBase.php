@@ -13,7 +13,8 @@ use Drupal\Core\Entity\Display\EntityDisplayInterface;
 abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDisplayInterface {
 
   /**
-   * The mode used to render entities with arbitrary display options.
+   * The 'mode' for runtime EntityDisplay objects used to render entities with
+   * arbitrary display options rather than a configured view mode or form mode.
    *
    * @todo Prevent creation of a mode with this ID
    *   https://www.drupal.org/node/2410727
@@ -56,10 +57,8 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   protected $mode = self::CUSTOM_MODE;
 
   /**
-   * Whether this display is enabled or not.
-   *
-   * If the entity (form) display is disabled, we'll fall back to the 'default'
-   * display.
+   * Whether this display is enabled or not. If the entity (form) display
+   * is disabled, we'll fall back to the 'default' display.
    *
    * @var bool
    */
@@ -80,10 +79,8 @@ abstract class EntityDisplayBase extends ConfigEntityBase implements EntityDispl
   protected $hidden = [];
 
   /**
-   * The original view or form mode that was requested.
-   *
-   * Case of view/form modes being configured to fall back to the 'default'
-   * display.
+   * The original view or form mode that was requested (case of view/form modes
+   * being configured to fall back to the 'default' display).
    *
    * @var string
    */

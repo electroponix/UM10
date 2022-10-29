@@ -12,7 +12,6 @@ use Drupal\Core\StringTranslation\PluralTranslatableMarkup;
 use Drupal\Tests\Traits\PhpUnitWarnings;
 use Drupal\TestTools\TestVarDumper;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
@@ -28,7 +27,6 @@ abstract class UnitTestCase extends TestCase {
 
   use PhpUnitWarnings;
   use PhpUnitCompatibilityTrait;
-  use ProphecyTrait;
   use ExpectDeprecationTrait;
 
   /**
@@ -180,13 +178,13 @@ abstract class UnitTestCase extends TestCase {
     $config_storage = $this->createMock('Drupal\Core\Config\NullStorage');
     $config_storage->expects($this->any())
       ->method('listAll')
-      ->willReturn(array_keys($configs));
+      ->will($this->returnValue(array_keys($configs)));
 
     foreach ($configs as $name => $config) {
       $config_storage->expects($this->any())
         ->method('read')
         ->with($this->equalTo($name))
-        ->willReturn($config);
+        ->will($this->returnValue($config));
     }
     return $config_storage;
   }
@@ -232,7 +230,7 @@ abstract class UnitTestCase extends TestCase {
     $container->expects($this->any())
       ->method('get')
       ->with('cache_tags.invalidator')
-      ->willReturn($cache_tags_validator);
+      ->will($this->returnValue($cache_tags_validator));
 
     \Drupal::setContainer($container);
     return $container;

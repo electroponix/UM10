@@ -59,7 +59,7 @@ class RouteSubscriberTest extends UnitTestCase {
     $this->entityTypeManager->expects($this->any())
       ->method('getStorage')
       ->with('view')
-      ->willReturn($this->viewStorage);
+      ->will($this->returnValue($this->viewStorage));
     $this->state = $this->createMock('\Drupal\Core\State\StateInterface');
     $this->routeSubscriber = new TestRouteSubscriber($this->entityTypeManager, $this->state);
   }
@@ -72,10 +72,10 @@ class RouteSubscriberTest extends UnitTestCase {
 
     $display_1->expects($this->once())
       ->method('collectRoutes')
-      ->willReturn(['test_id.page_1' => 'views.test_id.page_1']);
+      ->will($this->returnValue(['test_id.page_1' => 'views.test_id.page_1']));
     $display_2->expects($this->once())
       ->method('collectRoutes')
-      ->willReturn(['test_id.page_2' => 'views.test_id.page_2']);
+      ->will($this->returnValue(['test_id.page_2' => 'views.test_id.page_2']));
 
     $this->routeSubscriber->routes();
 
@@ -155,14 +155,14 @@ class RouteSubscriberTest extends UnitTestCase {
       ->getMock();
     $this->viewStorage->expects($this->any())
       ->method('load')
-      ->willReturn($view);
+      ->will($this->returnValue($view));
 
     $view->expects($this->any())
       ->method('getExecutable')
-      ->willReturn($executable);
+      ->will($this->returnValue($executable));
     $view->expects($this->any())
       ->method('id')
-      ->willReturn('test_id');
+      ->will($this->returnValue('test_id'));
     $executable->storage = $view;
 
     $executable->expects($this->any())

@@ -39,15 +39,15 @@ class AjaxResponseTest extends UnitTestCase {
     $command_one = $this->createMock('Drupal\Core\Ajax\CommandInterface');
     $command_one->expects($this->once())
       ->method('render')
-      ->willReturn(['command' => 'one']);
+      ->will($this->returnValue(['command' => 'one']));
     $command_two = $this->createMock('Drupal\Core\Ajax\CommandInterface');
     $command_two->expects($this->once())
       ->method('render')
-      ->willReturn(['command' => 'two']);
+      ->will($this->returnValue(['command' => 'two']));
     $command_three = $this->createMock('Drupal\Core\Ajax\CommandInterface');
     $command_three->expects($this->once())
       ->method('render')
-      ->willReturn(['command' => 'three']);
+      ->will($this->returnValue(['command' => 'three']));
 
     $this->ajaxResponse->addCommand($command_one);
     $this->ajaxResponse->addCommand($command_two);

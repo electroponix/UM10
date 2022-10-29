@@ -1024,7 +1024,6 @@ renderered
 renormalize
 reparenting
 reparsed
-relpersistence
 replyto
 resave
 resaved
@@ -1043,7 +1042,6 @@ revisionid
 revisioning
 revlog
 revpub
-relname
 ribisi
 ritchie
 rolename

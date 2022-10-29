@@ -149,7 +149,8 @@ class ThemeTest extends BrowserTestBase {
    */
   public function testPreprocessHtml() {
     $this->drupalGet('');
-    $this->assertSession()->elementsCount('xpath', '/body[@theme_test_page_variable="Page variable is an array."]', 1);
+    $attributes = $this->xpath('/body[@theme_test_page_variable="Page variable is an array."]');
+    $this->assertCount(1, $attributes, 'In template_preprocess_html(), the page variable is still an array (not rendered yet).');
     $this->assertSession()->pageTextContains('theme test page bottom markup');
   }
 

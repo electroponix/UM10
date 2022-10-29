@@ -4,7 +4,6 @@ namespace Drupal\layout_builder;
 
 use Drupal\Core\Config\Entity\ThirdPartySettingsInterface;
 use Drupal\Core\Plugin\PreviewAwarePluginInterface;
-use Drupal\Core\Render\Element;
 
 /**
  * Provides a domain object for layout sections.
@@ -95,12 +94,7 @@ class Section implements ThirdPartySettingsInterface {
       $layout->setInPreview($in_preview);
     }
 
-    $build = $layout->build($regions);
-    // If an entity was used to build the layout, store it on the build.
-    if (!Element::isEmpty($build) && isset($contexts['layout_builder.entity'])) {
-      $build['#entity'] = $contexts['layout_builder.entity']->getContextValue();
-    }
-    return $build;
+    return $layout->build($regions);
   }
 
   /**

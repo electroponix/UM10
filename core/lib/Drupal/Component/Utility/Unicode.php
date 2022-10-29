@@ -77,7 +77,8 @@ EOD;
   const STATUS_SINGLEBYTE = 0;
 
   /**
-   * Indicates that full unicode support with PHP mbstring extension is used.
+   * Indicates that full unicode support with the PHP mbstring extension is
+   * being used.
    */
   const STATUS_MULTIBYTE = 1;
 
@@ -131,6 +132,9 @@ EOD;
     }
 
     // Check mbstring configuration.
+    if (ini_get('mbstring.func_overload') != 0) {
+      return 'mbstring.func_overload';
+    }
     if (ini_get('mbstring.encoding_translation') != 0) {
       return 'mbstring.encoding_translation';
     }

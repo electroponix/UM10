@@ -108,7 +108,7 @@ class ImageTest extends UnitTestCase {
 
     $this->toolkit->expects($this->any())
       ->method('getPluginId')
-      ->willReturn('gd');
+      ->will($this->returnValue('gd'));
 
     if (!$load_expected) {
       $this->toolkit->expects($this->never())
@@ -135,11 +135,11 @@ class ImageTest extends UnitTestCase {
 
     $this->toolkit->expects($this->any())
       ->method('getPluginId')
-      ->willReturn('gd');
+      ->will($this->returnValue('gd'));
 
     $this->toolkit->expects($this->any())
       ->method('getToolkitOperation')
-      ->willReturn($this->toolkitOperation);
+      ->will($this->returnValue($this->toolkitOperation));
 
     $this->image = new Image($this->toolkit, $this->source);
 
@@ -212,7 +212,7 @@ class ImageTest extends UnitTestCase {
     $toolkit = $this->getToolkitMock();
     $toolkit->expects($this->once())
       ->method('save')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $image = new Image($toolkit, $this->image->getSource());
 
@@ -240,7 +240,7 @@ class ImageTest extends UnitTestCase {
     // This will fail if save() method isn't called on the toolkit.
     $this->toolkit->expects($this->once())
       ->method('save')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->assertFalse($this->image->save());
   }
@@ -254,7 +254,7 @@ class ImageTest extends UnitTestCase {
     $toolkit = $this->getToolkitMock();
     $toolkit->expects($this->once())
       ->method('save')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $image = new Image($toolkit, $this->image->getSource());
 

@@ -444,23 +444,23 @@ class EntityResolverManagerTest extends UnitTestCase {
     $definition = $this->createMock('Drupal\Core\Entity\EntityTypeInterface');
     $definition->expects($this->any())
       ->method('getClass')
-      ->willReturn('Drupal\Tests\Core\Entity\TestEntity');
+      ->will($this->returnValue('Drupal\Tests\Core\Entity\TestEntity'));
     $definition->expects($this->any())
       ->method('isRevisionable')
       ->willReturn(FALSE);
     $revisionable_definition = $this->createMock('Drupal\Core\Entity\EntityTypeInterface');
     $revisionable_definition->expects($this->any())
       ->method('getClass')
-      ->willReturn('Drupal\Tests\Core\Entity\TestEntity');
+      ->will($this->returnValue('Drupal\Tests\Core\Entity\TestEntity'));
     $revisionable_definition->expects($this->any())
       ->method('isRevisionable')
       ->willReturn(TRUE);
     $this->entityTypeManager->expects($this->any())
       ->method('getDefinitions')
-      ->willReturn([
+      ->will($this->returnValue([
         'entity_test' => $definition,
         'entity_test_rev' => $revisionable_definition,
-      ]);
+      ]));
     $this->entityTypeManager->expects($this->any())
       ->method('getDefinition')
       ->willReturnCallback(function ($entity_type) use ($definition, $revisionable_definition) {

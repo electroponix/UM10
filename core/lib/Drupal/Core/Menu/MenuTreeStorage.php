@@ -310,8 +310,8 @@ class MenuTreeStorage implements MenuTreeStorageInterface {
       }
     }
 
+    $transaction = $this->connection->startTransaction();
     try {
-      $transaction = $this->connection->startTransaction();
       if (!$original) {
         // Generate a new mlid.
         // @todo Remove the 'return' option in Drupal 11.
@@ -334,9 +334,7 @@ class MenuTreeStorage implements MenuTreeStorageInterface {
       $this->updateParentalStatus($link);
     }
     catch (\Exception $e) {
-      if (isset($transaction)) {
-        $transaction->rollBack();
-      }
+      $transaction->rollBack();
       throw $e;
     }
     return $affected_menus;

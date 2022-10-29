@@ -62,7 +62,7 @@ class YamlDiscoveryDecoratorTest extends UnitTestCase {
     $decorated = $this->createMock('Drupal\Component\Plugin\Discovery\DiscoveryInterface');
     $decorated->expects($this->once())
       ->method('getDefinitions')
-      ->willReturn($definitions);
+      ->will($this->returnValue($definitions));
 
     $this->discoveryDecorator = new YamlDiscoveryDecorator($decorated, 'test', $directories);
   }

@@ -746,17 +746,15 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
       return;
     }
 
+    $transaction = $this->database->startTransaction();
     try {
-      $transaction = $this->database->startTransaction();
       parent::delete($entities);
 
       // Ignore replica server temporarily.
       \Drupal::service('database.replica_kill_switch')->trigger();
     }
     catch (\Exception $e) {
-      if (isset($transaction)) {
-        $transaction->rollBack();
-      }
+      $transaction->rollBack();
       watchdog_exception($this->entityTypeId, $e);
       throw new EntityStorageException($e->getMessage(), $e->getCode(), $e);
     }
@@ -799,8 +797,8 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    * {@inheritdoc}
    */
   public function save(EntityInterface $entity) {
+    $transaction = $this->database->startTransaction();
     try {
-      $transaction = $this->database->startTransaction();
       $return = parent::save($entity);
 
       // Ignore replica server temporarily.
@@ -808,9 +806,7 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
       return $return;
     }
     catch (\Exception $e) {
-      if (isset($transaction)) {
-        $transaction->rollBack();
-      }
+      $transaction->rollBack();
       watchdog_exception($this->entityTypeId, $e);
       throw new EntityStorageException($e->getMessage(), $e->getCode(), $e);
     }
@@ -820,8 +816,8 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
    * {@inheritdoc}
    */
   public function restore(EntityInterface $entity) {
+    $transaction = $this->database->startTransaction();
     try {
-      $transaction = $this->database->startTransaction();
       // Insert the entity data in the base and data tables only for default
       // revisions.
       /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
@@ -857,9 +853,7 @@ class SqlContentEntityStorage extends ContentEntityStorageBase implements SqlEnt
       \Drupal::service('database.replica_kill_switch')->trigger();
     }
     catch (\Exception $e) {
-      if (isset($transaction)) {
-        $transaction->rollBack();
-      }
+      $transaction->rollBack();
       watchdog_exception($this->entityTypeId, $e);
       throw new EntityStorageException($e->getMessage(), $e->getCode(), $e);
     }

@@ -9,7 +9,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\Language;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Tests\UnitTestCase;
-use Drupal\user\Entity\User;
 
 /**
  * @coversDefaultClass \Drupal\contact\MailHandler
@@ -87,11 +86,11 @@ class MailHandlerTest extends UnitTestCase {
 
     $this->languageManager->expects($this->any())
       ->method('getDefaultLanguage')
-      ->willReturn($language);
+      ->will($this->returnValue($language));
 
     $this->languageManager->expects($this->any())
       ->method('getCurrentLanguage')
-      ->willReturn($language);
+      ->will($this->returnValue($language));
   }
 
   /**
@@ -293,7 +292,7 @@ class MailHandlerTest extends UnitTestCase {
    *   Mock sender for testing.
    */
   protected function getMockSender($anonymous = TRUE, $mail_address = 'anonymous@drupal.org') {
-    $sender = $this->createMock(User::class);
+    $sender = $this->createMock('\Drupal\Core\Session\AccountInterface');
     $sender->expects($this->once())
       ->method('isAnonymous')
       ->willReturn($anonymous);

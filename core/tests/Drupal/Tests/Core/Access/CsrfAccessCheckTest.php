@@ -55,11 +55,11 @@ class CsrfAccessCheckTest extends UnitTestCase {
     $this->csrfToken->expects($this->once())
       ->method('validate')
       ->with('test_query', 'test-path/42')
-      ->willReturn(TRUE);
+      ->will($this->returnValue(TRUE));
 
     $this->routeMatch->expects($this->once())
       ->method('getRawParameters')
-      ->willReturn(['node' => 42]);
+      ->will($this->returnValue(['node' => 42]));
 
     $route = new Route('/test-path/{node}', [], ['_csrf_token' => 'TRUE']);
     $request = Request::create('/test-path/42?token=test_query');
@@ -74,11 +74,11 @@ class CsrfAccessCheckTest extends UnitTestCase {
     $this->csrfToken->expects($this->once())
       ->method('validate')
       ->with('test_query', 'test-path')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->routeMatch->expects($this->once())
       ->method('getRawParameters')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $route = new Route('/test-path', [], ['_csrf_token' => 'TRUE']);
     $request = Request::create('/test-path?token=test_query');
@@ -93,11 +93,11 @@ class CsrfAccessCheckTest extends UnitTestCase {
     $this->csrfToken->expects($this->once())
       ->method('validate')
       ->with('', 'test-path')
-      ->willReturn(FALSE);
+      ->will($this->returnValue(FALSE));
 
     $this->routeMatch->expects($this->once())
       ->method('getRawParameters')
-      ->willReturn([]);
+      ->will($this->returnValue([]));
 
     $route = new Route('/test-path', [], ['_csrf_token' => 'TRUE']);
     $request = Request::create('/test-path');

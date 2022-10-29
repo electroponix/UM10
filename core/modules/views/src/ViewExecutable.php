@@ -351,12 +351,9 @@ class ViewExecutable {
   public $inited;
 
   /**
-   * The render array for the exposed form.
+   * The rendered output of the exposed form.
    *
-   * In cases that the exposed form is rendered as a block this will be an
-   * empty array.
-   *
-   * @var array
+   * @var string
    */
   public $exposed_widgets;
 

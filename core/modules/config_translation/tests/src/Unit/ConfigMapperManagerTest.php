@@ -39,7 +39,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
     $language_manager->expects($this->once())
       ->method('getCurrentLanguage')
       ->with(LanguageInterface::TYPE_INTERFACE)
-      ->willReturn($language);
+      ->will($this->returnValue($language));
 
     $this->typedConfigManager = $this->getMockBuilder('Drupal\Core\Config\TypedConfigManagerInterface')
       ->getMock();
@@ -71,7 +71,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
       ->expects($this->once())
       ->method('get')
       ->with('test')
-      ->willReturn($element);
+      ->will($this->returnValue($element));
 
     $result = $this->configMapperManager->hasTranslatable('test');
     $this->assertSame($expected, $result);
@@ -154,7 +154,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
     $element = $this->createMock('Drupal\Core\TypedData\TypedDataInterface');
     $element->expects($this->any())
       ->method('getDataDefinition')
-      ->willReturn($data_definition);
+      ->will($this->returnValue($data_definition));
     return $element;
   }
 
@@ -179,7 +179,7 @@ class ConfigMapperManagerTest extends UnitTestCase {
       ->getMock();
     $nested_element->expects($this->once())
       ->method('getIterator')
-      ->willReturn(new \ArrayIterator($elements));
+      ->will($this->returnValue(new \ArrayIterator($elements)));
     return $nested_element;
   }
 

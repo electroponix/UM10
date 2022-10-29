@@ -122,9 +122,8 @@ class ViewUI implements ViewEntityInterface {
   ];
 
   /**
-   * Whether the config is being synced through the import process.
-   *
-   * This is the case with create, update or delete.
+   * Whether the config is being created, updated or deleted through the
+   * import process.
    *
    * @var bool
    */

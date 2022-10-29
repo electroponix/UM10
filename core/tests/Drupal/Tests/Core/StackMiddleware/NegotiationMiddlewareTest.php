@@ -131,7 +131,7 @@ class NegotiationMiddlewareTest extends UnitTestCase {
     $app = $this->createMock(HttpKernelInterface::class);
     $app->expects($this->once())
       ->method('handle')
-      ->willReturn($this->createMock(Response::class));
+      ->will($this->returnValue($this->createMock(Response::class)));
 
     $content_negotiation = new StubNegotiationMiddleware($app);
 
