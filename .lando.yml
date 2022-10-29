@@ -1,0 +1,4 @@
+name: lando-um10
+recipe: drupal10
+config:
+  webroot: .
